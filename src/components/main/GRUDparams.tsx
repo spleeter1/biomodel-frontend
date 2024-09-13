@@ -33,7 +33,7 @@ const GRUDparams = () => {
             <div style={{ maxWidth: '100%' }}>
                 <ToolHeader
                     model={listParam[0].toUpperCase()}
-                    url="http://192.168.1.135:5000/grud"
+                    url="http://192.168.1.135:32100/grud"
                 />
             </div>
             <LineSeparator content="Tool Parameters" />

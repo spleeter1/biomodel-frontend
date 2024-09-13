@@ -42,7 +42,7 @@ const PlinkParams = () => {
             <div style={{ maxWidth: '100%' }}>
                 <ToolHeaderPlink
                     model={listParam[0].toUpperCase()}
-                    url="http://192.168.1.135:5000/plink"
+                    url="http://192.168.1.135:32100/plink"
                 />
             </div>
             <LineSeparator content="Tool Parameters" />

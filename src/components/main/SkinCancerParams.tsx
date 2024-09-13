@@ -25,7 +25,7 @@ const SkinCancerParams = () => {
             <div style={{ maxWidth: '100%' }}>
                 <ToolHeaderSkinCancer
                     model={listParam[0].toUpperCase()}
-                    url="http://192.168.1.135:5000/skin-cancer"
+                    url="http://192.168.1.135:32100/skin-cancer"
                 />
             </div>
             <LineSeparator content="Tool Parameters" />
