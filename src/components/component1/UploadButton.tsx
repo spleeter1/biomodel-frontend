@@ -38,24 +38,6 @@ export default function UploadButton() {
                 dispatch(pushFile({ key, file }));
             });
         }
-
-        // console.log(files);
-        // console.log(e.target);
-        // if (e.target.files && e.target.files.length > 0) {
-        //     setFile(e.target.files?.[0]);
-        // console.log(e.target.files);
-        // console.log(e.target.files[0]);
-        // console.log(typeof e.target.files);
-        // const reader = new FileReader();
-        // reader.onload = event => {
-        //     const fileContent = event.target?.result;
-        //     // console.log(fileContent);
-        //     dispatch(increase());
-        //     dispatch(pushFile(JSON.stringify(fileContent)));
-        // };
-        // reader.readAsText(e.target.files[0]);
-        // onUploadSuccess(e.target.files[0]);
-        // }
     };
 
     return (

@@ -1,22 +1,11 @@
 {
     "imputation": {
-        "Beagle": {
-            "Parameter_1": "p1",
-            "Parameter_2": "p2"
-        },
-        "Minimac4": {
-            "Parameter_1": "p3",
-            "Parameter_2": "p4"
-        },
         "GRUD": {
             "data": "1",
             "region": "2"
         }
     },
     "basemodel": {
-        "HeartDisease": {
-            "data": "1"
-        },
         "SkinCancer": {
             "data": "0"
         }
@@ -26,6 +15,8 @@
             "basedata": "1",
             "targetdata": "2",
             "p_value": "0.1"
-        }
+        },
+        "VGPdiseases": {},
+        "Prsice-2": {}
     }
 }

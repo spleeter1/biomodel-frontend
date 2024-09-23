@@ -2,7 +2,19 @@
 
 import { Box } from '@mui/material';
 import logo from '../../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const Home = () => {
+    const navigate = useNavigate();
+    async () => {
+        try {
+            const response = await axios.post('http://127.0.0.1:5000', {});
+            console.log(response.status);
+            if (response.status === 200) navigate('/');
+        } catch (error) {
+            alert('lỗi');
+        }
+    };
     return (
         <div
             style={{
@@ -11,7 +23,6 @@ const Home = () => {
                 width: '55%',
                 flexDirection: 'column',
                 alignItems: 'center',
-
                 fontFamily: 'sans-serif',
                 // placeContent: ,
             }}

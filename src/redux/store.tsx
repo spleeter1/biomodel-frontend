@@ -8,6 +8,7 @@ import fileKeysSlice from './fileKeysSlice';
 import historyFileStoreSlice from './historyFileSlice';
 import LoginStoreSlice from './loginStoreSlice';
 import resultsStringSlice from './resultsStringSlice';
+import VGPdiseasesSlice from './VGPdiseasesSlice';
 
 const store = configureStore({
     reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
         historyFileStore: historyFileStoreSlice,
         loginStore: LoginStoreSlice,
         resultsStringStore: resultsStringSlice,
+        VGPdiseasesStore: VGPdiseasesSlice,
     },
 });
 export default store;

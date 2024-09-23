@@ -6,7 +6,7 @@ type FileKeysState = string[];
 const initialState: FileKeysState = [];
 
 const fileKeysSlice = createSlice({
-    name: 'fileKeys',
+    name: 'fileKeysStore',
     initialState,
     reducers: {
         setFileKeys: (_, action: PayloadAction<string[]>) => {

@@ -27,11 +27,11 @@ const ToolHeaderSkinCancer: React.FC<ToolHeaderProps> = ({ model, url }) => {
         files.forEach(fileItem => {
             formData.append(fileItem.key, fileItem.file);
         });
+
         // params.forEach(param => {
         //     formData.append(param.key, param.value);
         // });
         // formData.forEach(x => console.log(x));
-
         dispatch(setIsLoadingState());
         try {
             const response = await fetch(url, {

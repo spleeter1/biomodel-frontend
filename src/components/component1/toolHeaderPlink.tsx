@@ -25,15 +25,16 @@ const ToolHeaderPlink: React.FC<ToolHeaderPlinkProps> = ({ model, url }) => {
     };
     const handleClickUpload = async () => {
         const formData = new FormData();
-        // files.forEach(file => {
-        //     formData.append('files', file);
-        // });
-        handleUpdateFileKey(0, 'base_files');
-        handleUpdateFileKey(1, 'target_files');
-        files.forEach(fileItem => {
-            formData.append(fileItem.key, fileItem.file);
+        handleUpdateFileKey(0, 'base_file');
+        handleUpdateFileKey(1, 'target_file');
+        console.log(files);
+        files.forEach((fileItem, i) => {
+            console.log(i);
+            if (i === 0) {
+                formData.append('base_file', fileItem.file);
+            } else if (i === 1) formData.append('target_file', fileItem.file);
         });
-
+        console.log(formData);
         params.forEach(param => {
             formData.append(param.key, param.value);
         });

@@ -22,6 +22,8 @@ import PlinkParams from './components/main/PlinkParams';
 import Login from './components/login';
 import Register from './components/register';
 import SkinCancerParams from './components/main/SkinCancerParams';
+import VGPdiseasesParams from './components/main/VGPdiseasesParams';
+import PRSice2Params from './components/main/PRSice2Params';
 
 const componentMapping: { [key: string]: React.ComponentType<any> } = {
     Beagle: BeagleParams,
@@ -30,6 +32,8 @@ const componentMapping: { [key: string]: React.ComponentType<any> } = {
     HeartDisease: HeartDiseaseParams,
     Plink: PlinkParams,
     SkinCancer: SkinCancerParams,
+    VGPdiseases: VGPdiseasesParams,
+    'Prsice-2': PRSice2Params,
 };
 // console.log(componentMapping);
 type Route = {

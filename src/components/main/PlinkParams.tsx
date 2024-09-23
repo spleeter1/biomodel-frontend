@@ -16,7 +16,7 @@ const PlinkParams = () => {
     const url = useSelector((state: RootState) => state.urlStore.value);
     const dispatch = useDispatch();
 
-    const fileKeys = ['base_files', 'target_files'];
+    const fileKeys = ['base_file', 'target_file'];
     dispatch(setFileKeys(fileKeys));
     const isLoading = useSelector(
         (state: RootState) => state.loadingStore.value
