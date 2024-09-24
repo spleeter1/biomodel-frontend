@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../component2/LoadingGif';
 import Output from '../component2/Output';
 import { RootState } from '../../redux/store';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { updateValue } from '../../redux/stringParamSlice';
 import { setFileKeys } from '../../redux/fileKeysSlice';
 import ToolHeaderPlink from '../component1/toolHeaderPlink';
@@ -30,6 +30,8 @@ const PlinkParams = () => {
         (key: string) => (e: ChangeEvent<HTMLInputElement>) => {
             dispatch(updateValue({ key, value: e.target.value }));
         };
+
+    const [fileNameDownload, setFileNameDownload] = useState('');
     return (
         <div
             style={{
@@ -43,6 +45,7 @@ const PlinkParams = () => {
                 <ToolHeaderPlink
                     model={listParam[0].toUpperCase()}
                     url="http://192.168.1.135:32100/plink"
+                    sendFileNameToParent={setFileNameDownload}
                 />
             </div>
             <LineSeparator content="Tool Parameters" />
@@ -110,7 +113,11 @@ const PlinkParams = () => {
                     </div>
                 </div>
             </div>
-            {url !== '' ? <Output url={url} /> : <></>}
+            {url !== '' ? (
+                <Output url={url} filename={fileNameDownload} />
+            ) : (
+                <></>
+            )}
             {isLoading === true ? <Loading /> : <></>}
             <LineSeparator content="Help" />
             <LineSeparator content="Tutorial" />

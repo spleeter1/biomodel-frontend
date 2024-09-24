@@ -16,6 +16,7 @@ const PRSice2Tool = () => {
         (state: RootState) => state.loadingStore.value
     );
     const [files, setFiles] = useState<{ file: File; key: string }[]>([]);
+    const [fileNameDownload, setFileNameDownload] = useState('');
     const handleFileChange = (
         event: React.ChangeEvent<HTMLInputElement>,
         fileKey: string
@@ -45,14 +46,12 @@ const PRSice2Tool = () => {
 
         e.preventDefault();
         const formData = new FormData();
-        console.log(files);
+        // console.log(files);
 
         files.forEach(({ file, key }) => {
             formData.append(key, file);
         });
-        console.log(formData);
-        // formData.append(files[0].key, files[0].file);
-        // formData.append(files[1].key, files[1].file);
+
         for (const [key, value] of formData.entries()) {
             console.log(key, value);
         }
@@ -62,6 +61,16 @@ const PRSice2Tool = () => {
                 formData,
                 { responseType: 'blob' }
             );
+
+            const contentDisposition = response.headers['content-disposition'];
+
+            const filename =
+                contentDisposition?.split('=')[1].trim() || 'default-filename';
+            console.log(filename);
+            // const filename = contentDisposition;
+            setFileNameDownload(filename);
+            console.log(filename);
+
             const blob = new Blob([response.data], {
                 type: response.headers['content-type'],
             });
@@ -75,7 +84,6 @@ const PRSice2Tool = () => {
         }
     };
     return (
-        // <form onSubmit={handleRunTool}>
         <div style={{ paddingBottom: '20px' }}>
             <div
                 style={{
@@ -150,10 +158,15 @@ const PRSice2Tool = () => {
                 <PlayArrowIcon />
                 <Typography>Run Tool</Typography>
             </Button>
-            {url !== '' ? <Output url={url} /> : <></>}
+            <div style={{ paddingTop: '20px' }}>
+                {url !== '' ? (
+                    <Output url={url} filename={fileNameDownload} />
+                ) : (
+                    <></>
+                )}
+            </div>
             {isLoading === true ? <Loading /> : <></>}
         </div>
-        // </form>
     );
 };
 export default PRSice2Tool;

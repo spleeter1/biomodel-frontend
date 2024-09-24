@@ -9,7 +9,8 @@ const Home = () => {
     async () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000', {});
-            console.log(response.status);
+            // console.log(response.status);
+            console.log(response);
             if (response.status === 200) navigate('/');
         } catch (error) {
             alert('lỗi');

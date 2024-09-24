@@ -5,14 +5,16 @@ import { setURL } from '../../redux/urlStoreSlice';
 
 type OutputProps = {
     url: string;
+    filename: string;
 };
-const Output: React.FC<OutputProps> = ({ url }) => {
+const Output: React.FC<OutputProps> = ({ url, filename }) => {
     const dispatch = useDispatch();
     const handleDownload = () => {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
         // a.download = 'result.vcf.gz'; // Specify the desired file name
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);

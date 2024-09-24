@@ -11,8 +11,13 @@ import { updateFileKey } from '../../redux/fileKeysSlice';
 type ToolHeaderPlinkProps = {
     model: string;
     url: string;
+    sendFileNameToParent: (data: string) => void;
 };
-const ToolHeaderPlink: React.FC<ToolHeaderPlinkProps> = ({ model, url }) => {
+const ToolHeaderPlink: React.FC<ToolHeaderPlinkProps> = ({
+    model,
+    url,
+    sendFileNameToParent,
+}) => {
     const dispatch = useDispatch();
     const stringParam = useSelector(
         (state: RootState) => state.stringParamStore
@@ -48,6 +53,16 @@ const ToolHeaderPlink: React.FC<ToolHeaderPlinkProps> = ({ model, url }) => {
             });
 
             if (response.ok) {
+                const contentDisposition = response.headers.get(
+                    'content-Disposition'
+                );
+                const filename =
+                    contentDisposition?.split('=')[1].trim() ||
+                    'default-filename';
+                console.log(filename);
+
+                sendFileNameToParent(filename);
+
                 const blob = await response.blob();
                 dispatch(setURL(window.URL.createObjectURL(blob)));
             } else {
