@@ -19,7 +19,7 @@ const options = [
     'PRS-CS (EAS)',
     'PRS-CSx (EAS + EUR)',
     'PRSice-2 (CKB)',
-    'LDpred2-auto',
+    'LDpred2-auto (CKB)',
     'LDpred2-grid (CKB)',
     'PRS-CS (CKB)',
     'PGS catalog',
@@ -28,7 +28,7 @@ const options = [
 const VGPdiseasesOptions = () => {
     const dispatch = useDispatch();
     const [checkedItems, setCheckedItems] = useState<boolean[]>(
-        Array(options.length).fill(false)
+        Array(options.length).fill(true)
     );
     const allChecked = checkedItems.every(Boolean);
     const isLoading = useSelector(
@@ -79,40 +79,96 @@ const VGPdiseasesOptions = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flexWrap: 'wrap',
-                    gap: 1,
-                    padding: '0 7%',
-                }}
-            >
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={allChecked}
-                            onChange={handleCheckboxAll}
-                            inputProps={{ 'aria-label': 'All' }}
-                        />
-                    }
-                    label="All"
-                />
-
-                {options.map((option, i) => (
+        <Box sx={{}}>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flexWrap: 'wrap',
+                        gap: 1,
+                        padding: '0 7%',
+                    }}
+                >
                     <FormControlLabel
-                        key={option}
                         control={
                             <Checkbox
-                                onChange={handleCheckboxChange(i)}
-                                checked={checkedItems[i]}
-                                inputProps={{ 'aria-label': option }}
+                                checked={allChecked}
+                                onChange={handleCheckboxAll}
+                                inputProps={{ 'aria-label': 'All' }}
                             />
                         }
-                        label={option}
+                        label="All"
                     />
-                ))}
+
+                    {options.slice(0, 5).map((option, i) => (
+                        <FormControlLabel
+                            key={option}
+                            control={
+                                <Checkbox
+                                    onChange={handleCheckboxChange(i)}
+                                    checked={checkedItems[i]}
+                                    inputProps={{ 'aria-label': option }}
+                                />
+                            }
+                            label={option}
+                        />
+                    ))}
+                </Box>
+                {/* cọt giữa */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flexWrap: 'wrap',
+                        gap: 1,
+                        padding: '0 7%',
+                    }}
+                >
+                    {options.slice(5, 9).map((option, i) => {
+                        const idx = i + 5;
+                        return (
+                            <FormControlLabel
+                                key={option}
+                                control={
+                                    <Checkbox
+                                        onChange={handleCheckboxChange(idx)}
+                                        checked={checkedItems[idx]}
+                                        inputProps={{ 'aria-label': option }}
+                                    />
+                                }
+                                label={option}
+                            />
+                        );
+                    })}
+                </Box>
+                {/* cột phải */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flexWrap: 'wrap',
+                        gap: 1,
+                        padding: '0 7%',
+                    }}
+                >
+                    {options.slice(-1).map((option, i) => {
+                        const idx = i + 9;
+                        return (
+                            <FormControlLabel
+                                key={option}
+                                control={
+                                    <Checkbox
+                                        onChange={handleCheckboxChange(idx)}
+                                        checked={checkedItems[idx]}
+                                        inputProps={{ 'aria-label': option }}
+                                    />
+                                }
+                                label={option}
+                            />
+                        );
+                    })}
+                </Box>
             </Box>
 
             <Button
@@ -122,6 +178,7 @@ const VGPdiseasesOptions = () => {
                     width: '150px',
                     justifyContent: 'space-around',
                     margin: '0 7%',
+                    marginTop: '20px',
                 }}
                 variant="contained"
                 onClick={handleRunTool}

@@ -8,6 +8,7 @@ import Loading from '../component2/LoadingGif';
 import { useState } from 'react';
 import UploadButton20 from './UploadButton20';
 import Output from '../component2/Output';
+// import StorageButton from '../component2/StorageButton';
 const PRSice2Tool = () => {
     const fetchKeys = ['base_file', 'target_file'];
     const dispatch = useDispatch();
@@ -160,7 +161,11 @@ const PRSice2Tool = () => {
             </Button>
             <div style={{ paddingTop: '20px' }}>
                 {url !== '' ? (
-                    <Output url={url} filename={fileNameDownload} />
+                    <div>
+                        <Output url={url} filename={fileNameDownload} />
+                        <div style={{ padding: '1%' }}></div>
+                        {/* <StorageButton /> */}
+                    </div>
                 ) : (
                     <></>
                 )}

@@ -10,6 +10,7 @@ import { ChangeEvent, useState } from 'react';
 import { updateValue } from '../../redux/stringParamSlice';
 import { setFileKeys } from '../../redux/fileKeysSlice';
 import ToolHeaderPlink from '../component1/toolHeaderPlink';
+import StorageButton from '../component2/StorageButton';
 
 const PlinkParams = () => {
     const listParam = getParams('Plink');
@@ -113,11 +114,18 @@ const PlinkParams = () => {
                     </div>
                 </div>
             </div>
-            {url !== '' ? (
-                <Output url={url} filename={fileNameDownload} />
-            ) : (
-                <></>
-            )}
+
+            <div style={{ paddingTop: '20px' }}>
+                {url !== '' ? (
+                    <div>
+                        <Output url={url} filename={fileNameDownload} />
+                        <div style={{ padding: '1%' }}></div>
+                        <StorageButton />
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </div>
             {isLoading === true ? <Loading /> : <></>}
             <LineSeparator content="Help" />
             <LineSeparator content="Tutorial" />
