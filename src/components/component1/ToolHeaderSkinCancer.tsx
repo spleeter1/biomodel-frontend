@@ -7,6 +7,7 @@ import { resetAllValues } from '../../redux/stringParamSlice';
 import { resetFiles } from '../../redux/fileStoreSlice';
 import { pushResultsString } from '../../redux/resultsStringSlice';
 import { setFileKeys } from '../../redux/fileKeysSlice';
+import axios from 'axios';
 
 type ToolHeaderProps = {
     model: string;
@@ -34,16 +35,17 @@ const ToolHeaderSkinCancer: React.FC<ToolHeaderProps> = ({ model, url }) => {
         // formData.forEach(x => console.log(x));
         dispatch(setIsLoadingState());
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData,
+            const response = await axios.post(url, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
 
-            if (response.ok) {
-                const results = await response.text();
+            if (response.status === 200) {
+                const results = response.data; // Lấy dữ liệu từ phản hồi
                 dispatch(pushResultsString([results]));
             } else {
-                const errorData = await response.json();
+                const errorData = response.data;
                 console.error('Prediction failed:', errorData);
                 alert('Prediction failed');
             }

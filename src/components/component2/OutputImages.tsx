@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import StorageButton from './StorageButton';
 
 const OutputImages = () => {
     const files = useSelector((state: RootState) => state.fileStore);
@@ -8,9 +9,9 @@ const OutputImages = () => {
         <div
             style={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 flexWrap: 'wrap',
-                gap: '10px',
+
                 justifyContent: 'center',
             }}
         >
@@ -19,7 +20,7 @@ const OutputImages = () => {
                     flex: '1',
                     display: 'flex',
                     flexWrap: 'wrap',
-                    padding: '0% 2% 0% 2%',
+                    padding: '0% 2% 10% 2%',
                 }}
             >
                 {files.map((item, idx) => (
@@ -53,6 +54,17 @@ const OutputImages = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div
+                style={{
+                    padding: '10px 2% 2% 2%',
+                    justifyContent: 'center',
+                }}
+            >
+                <StorageButton
+                    data={files[0].file}
+                    filename={results[0].toString()}
+                />
             </div>
         </div>
     );

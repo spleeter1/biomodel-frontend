@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import OutputImages from '../component2/OutputImages';
 import Loading from '../component2/LoadingGif';
+
 const SkinCancerParams = () => {
     const listParam = getParams('SkinCancer');
     const results = useSelector((state: RootState) => state.resultsStringStore);

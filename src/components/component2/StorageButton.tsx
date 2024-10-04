@@ -3,21 +3,38 @@ import StorageIcon from '@mui/icons-material/Storage';
 import axios from 'axios';
 
 type StorageButtonProps = {
-    data: Blob;
+    data: Blob | string;
     filename: string;
 };
 const StorageButton: React.FC<StorageButtonProps> = ({ data, filename }) => {
     const handleFileUpload = async () => {
         const formData = new FormData();
-        formData.append('file', data);
+        formData.append('user', 'biomodel');
+
+        const newPic = new File([data], filename + '.jpg');
+        formData.append('image', newPic);
         try {
-            // const response = await axios.post('')
-        } finally {
+            const resq = await axios.post(
+                'http://127.0.0.1:5000/storeSkinCancer/',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            if (resq.status === 200) {
+                alert(JSON.stringify(resq.data).toString());
+            }
+        } catch (error) {
+            console.error('Cannot store files', error);
         }
     };
 
     return (
         <Box
+            component="div"
             sx={{
                 borderRadius: 1,
                 bgcolor: '#e8ecee',
@@ -31,7 +48,7 @@ const StorageButton: React.FC<StorageButtonProps> = ({ data, filename }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
             }}
-            // onClick={}
+            onClick={handleFileUpload}
         >
             <div>
                 <StorageIcon />
@@ -43,7 +60,7 @@ const StorageButton: React.FC<StorageButtonProps> = ({ data, filename }) => {
                         textAlign: 'center',
                     }}
                 >
-                    Storage your result
+                    Save your result
                 </Typography>
             </div>
         </Box>

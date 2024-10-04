@@ -186,6 +186,7 @@ const VGPdiseasesOptions = () => {
                 <PlayArrowIcon />
                 <Typography>Run Tool</Typography>
             </Button>
+
             {images.length
                 ? images.map((image, index) => (
                       <Box
@@ -193,6 +194,7 @@ const VGPdiseasesOptions = () => {
                           key={index}
                           src={`data:image/jpeg;base64,${image}`}
                           alt={`Image ${index}`}
+                          sx={{ width: '100%' }}
                       />
                   ))
                 : ''}
