@@ -5,17 +5,23 @@ import axios from 'axios';
 type StorageButtonProps = {
     data: Blob | string;
     filename: string;
+    endpoint: string;
 };
-const StorageButton: React.FC<StorageButtonProps> = ({ data, filename }) => {
+const StorageButton: React.FC<StorageButtonProps> = ({
+    data,
+    filename,
+    endpoint,
+}) => {
     const handleFileUpload = async () => {
         const formData = new FormData();
         formData.append('user', 'biomodel');
 
-        const newPic = new File([data], filename + '.jpg');
+        const newPic = new File([data], filename);
+        // console.log(filename);
         formData.append('image', newPic);
         try {
-            const resq = await axios.post(
-                'http://127.0.0.1:5000/storeSkinCancer/',
+            const response = await axios.post(
+                `http://127.0.0.1:5000/${endpoint}`,
                 formData,
                 {
                     headers: {
@@ -24,8 +30,8 @@ const StorageButton: React.FC<StorageButtonProps> = ({ data, filename }) => {
                 }
             );
 
-            if (resq.status === 200) {
-                alert(JSON.stringify(resq.data).toString());
+            if (response.status === 200) {
+                alert(JSON.stringify(response.data).toString());
             }
         } catch (error) {
             console.error('Cannot store files', error);

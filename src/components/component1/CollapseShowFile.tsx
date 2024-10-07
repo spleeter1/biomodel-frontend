@@ -1,31 +1,52 @@
 import { Box, Collapse, Tooltip } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { useDispatch } from 'react-redux';
-import { delFile } from '../../redux/fileStoreSlice';
-
+// import { useDispatch } from 'react-redux';
+// import { delFile } from '../../redux/fileStoreSlice';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import axios from 'axios';
 // import listParams from '../../data/listParams.json';
 
 type CollapseShowFileProps = {
     idx: number;
-    nameFile: string;
-    data: Object;
+    user_id: number;
+    id: number;
+    file_name: string;
+    date: string;
+    file_path: string;
 };
 const CollapseShowFile: React.FC<CollapseShowFileProps> = ({
     idx,
-    nameFile,
-    data,
+    // user_id,
+    id,
+    file_name,
+    file_path,
+    date,
 }) => {
     const [checked, setChecked] = React.useState(false);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     // const data = listParams;
+
+    const [wrapFileName, setWrapFileName] = useState('nowrap');
     const handleDisplay = () => {
+        setWrapFileName(prev => (prev === 'wrap' ? 'nowrap' : 'wrap'));
         setChecked(prev => !prev);
     };
-    const handleDel = (idx: string) => {
-        dispatch(delFile(idx));
+
+    const handleDel = async (id: number) => {
+        // dispatch(delFile(idx));
+        const formData = new FormData();
+        formData.append('id', id.toString());
+        try {
+            const response = await axios.post(
+                `http://127.0.0.1:5000/deleteFileResult/`,
+                formData
+            );
+            if (response.status === 200) {
+                alert(JSON.stringify(response.data));
+            }
+        } catch (error) {}
     };
 
     return (
@@ -33,7 +54,6 @@ const CollapseShowFile: React.FC<CollapseShowFileProps> = ({
             <Collapse
                 in={checked}
                 collapsedSize={30}
-                // onClick={handleDisplay}
                 sx={{
                     borderLeft: '.25rem solid #25537b',
                     borderRadius: '10px',
@@ -45,25 +65,40 @@ const CollapseShowFile: React.FC<CollapseShowFileProps> = ({
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
+                        flexWrap: 'wrap',
                         alignItems: 'center',
-                        padding: '0px 10px',
                     }}
                 >
-                    <div style={{}}>
-                        {idx} : {nameFile}
-                        {/* 1: listParams */}
+                    <div
+                        style={{
+                            flexGrow: 3,
+                            overflow: 'hidden',
+                            whiteSpace: wrapFileName,
+                            textOverflow: 'ellipsis',
+                            maxWidth: '65%',
+                            paddingLeft: '3%',
+                        }}
+                    >
+                        {idx} : {file_name}
                     </div>
-                    <div style={{}}>
+                    <div
+                        style={{
+                            paddingTop: '1%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            width: '30%',
+                        }}
+                    >
                         <Tooltip title="Display" onClick={handleDisplay}>
                             <VisibilityIcon />
                         </Tooltip>
-                        <Tooltip title="Edit">
-                            <ModeEditIcon />
+                        <Tooltip title="Download">
+                            <FileDownloadIcon />
                         </Tooltip>
                         <Tooltip
                             key={idx}
                             title="Delete"
-                            onClick={() => handleDel(idx.toString())}
+                            onClick={() => handleDel(id)}
                         >
                             <DeleteIcon />
                         </Tooltip>
@@ -81,7 +116,16 @@ const CollapseShowFile: React.FC<CollapseShowFileProps> = ({
                             overflow: 'auto',
                         }}
                     >
-                        {data.toString()}
+                        <p>Preview is not supported!</p>
+                        <p>Details:</p>
+                        <p>{`id: ${id}`}</p>
+                        <p>{`Name: ${file_name}`}</p>
+                        <p>{`Path: ${file_path}`}</p>
+                        <p>{`Date: ${date}`}</p>
+
+                        <a href={file_path} target="_blank">
+                            Click here to show content!
+                        </a>
                     </Box>
                 </div>
             </Collapse>

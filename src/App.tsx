@@ -91,7 +91,7 @@ const router = createBrowserRouter([
                 <Header />
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <PanelLeft />
-                    {<Home /> && <Outlet />}
+                    {<Outlet />}
                     <HistoryParams />
                 </div>
             </div>

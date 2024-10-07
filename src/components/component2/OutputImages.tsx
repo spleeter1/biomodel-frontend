@@ -63,7 +63,8 @@ const OutputImages = () => {
             >
                 <StorageButton
                     data={files[0].file}
-                    filename={results[0].toString()}
+                    filename={results[0].toString() + '.jpg'}
+                    endpoint="storeSkinCancer/"
                 />
             </div>
         </div>
