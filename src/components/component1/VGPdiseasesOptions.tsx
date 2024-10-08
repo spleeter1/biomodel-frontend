@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoadingState } from '../../redux/loadingSlice';
 import { RootState } from '../../redux/store';
 import Loading from '../component2/LoadingGif';
+import SaveVGPdiseasesBtn from '../component2/SaveVGPdiseasesBtn';
+// import SaveResultButton from '../component2/SaveReusultButton';
 const options = [
     'PRSice-2 (EAS)',
     'LDpred2-auto (EAS)',
@@ -198,6 +200,28 @@ const VGPdiseasesOptions = () => {
                       />
                   ))
                 : ''}
+            {images.length > 0 ? (
+                <SaveVGPdiseasesBtn
+                    data={images.map(image => {
+                        const byteCharacters = atob(image);
+                        const byteNumbers = new Array(byteCharacters.length);
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                        }
+                        const byteArray = new Uint8Array(byteNumbers);
+                        return new File(
+                            [byteArray],
+                            `VGP_diseases_${Date.now()}.png`,
+                            {
+                                type: 'image/jpeg',
+                            }
+                        );
+                    })}
+                    endpoint="storeVGPdiseases"
+                />
+            ) : (
+                ''
+            )}
             {isLoading === true ? <Loading /> : <></>}
         </Box>
     );

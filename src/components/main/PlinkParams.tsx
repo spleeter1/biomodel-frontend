@@ -120,7 +120,7 @@ const PlinkParams = () => {
                     <div>
                         <Output url={url} filename={fileNameDownload} />
                         <div style={{ padding: '1%' }}></div>
-                        <StorageButton />
+                        <StorageButton data={''} filename={''} endpoint={''} />
                     </div>
                 ) : (
                     <></>

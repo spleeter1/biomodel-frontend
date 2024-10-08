@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 import { setURL } from '../../redux/urlStoreSlice';
 import { setIsLoadingState } from '../../redux/loadingSlice';
 import { resetAllValues } from '../../redux/stringParamSlice';
-import { resetFiles } from '../../redux/fileStoreSlice';
+import { pushFile, resetFiles } from '../../redux/fileStoreSlice';
 
 type ToolHeaderProps = {
     model: string;
@@ -43,7 +43,27 @@ const ToolHeader: React.FC<ToolHeaderProps> = ({ model, url }) => {
 
             if (response.ok) {
                 const blob = await response.blob();
-                dispatch(setURL(window.URL.createObjectURL(blob)));
+                const contentDisposition = response.headers.get(
+                    'Content-Disposition'
+                );
+                let filename = 'result.vcf.gz';
+                if (contentDisposition) {
+                    const match = contentDisposition.match(/filename="(.+)"/);
+                    if (match && match[1]) {
+                        filename = match[1];
+                    }
+                }
+                const fileBlob = new File([blob], filename, {
+                    type: blob.type,
+                });
+                const fileItem = {
+                    key: filename,
+                    file: fileBlob,
+                };
+                dispatch(setURL(window.URL.createObjectURL(fileBlob)));
+                dispatch(resetFiles());
+                dispatch(pushFile(fileItem));
+                console.log(files);
             } else {
                 const errorData = await response.json();
                 console.error('Prediction failed:', errorData);
@@ -51,11 +71,11 @@ const ToolHeader: React.FC<ToolHeaderProps> = ({ model, url }) => {
             }
         } catch (error) {
             console.error('Error:', error);
-            dispatch(resetFiles());
+            // dispatch(resetFiles());
             dispatch(resetAllValues());
         } finally {
             dispatch(setIsLoadingState());
-            dispatch(resetFiles());
+            // dispatch(resetFiles());
             dispatch(resetAllValues());
         }
     };

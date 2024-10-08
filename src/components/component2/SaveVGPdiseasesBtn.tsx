@@ -2,23 +2,23 @@ import { Box, Typography } from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
 import axios from 'axios';
 
-type StorageButtonProps = {
-    data: Blob | string;
-    filename: string;
+type SaveVGPdiseasesBtnProps = {
+    data: Blob[]
     endpoint: string;
 };
-const StorageButton: React.FC<StorageButtonProps> = ({
+const SaveVGPdiseasesBtn: React.FC<SaveVGPdiseasesBtnProps> = ({
     data,
-    filename,
     endpoint,
 }) => {
     const handleFileUpload = async () => {
         const formData = new FormData();
         formData.append('user', 'biomodel');
 
-        const newPic = new File([data], filename);
-        // console.log(filename);
-        formData.append('image', newPic);
+        data.map((file) => {
+            formData.append('image', file);
+        })
+        
+        
         try {
             const response = await axios.post(
                 `http://127.0.0.1:5000/${endpoint}/`,
@@ -72,4 +72,4 @@ const StorageButton: React.FC<StorageButtonProps> = ({
         </Box>
     );
 };
-export default StorageButton;
+export default SaveVGPdiseasesBtn;

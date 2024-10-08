@@ -8,6 +8,8 @@ import Loading from '../component2/LoadingGif';
 import { useState } from 'react';
 import UploadButton20 from './UploadButton20';
 import Output from '../component2/Output';
+
+import SaveResultButton from '../component2/SaveReusultButton';
 // import StorageButton from '../component2/StorageButton';
 const PRSice2Tool = () => {
     const fetchKeys = ['base_file', 'target_file'];
@@ -18,6 +20,9 @@ const PRSice2Tool = () => {
     );
     const [files, setFiles] = useState<{ file: File; key: string }[]>([]);
     const [fileNameDownload, setFileNameDownload] = useState('');
+
+    const [blobFile, setBlobFile] = useState<Blob>();
+
     const handleFileChange = (
         event: React.ChangeEvent<HTMLInputElement>,
         fileKey: string
@@ -68,15 +73,14 @@ const PRSice2Tool = () => {
             const filename =
                 contentDisposition?.split('=')[1].trim() || 'default-filename';
             console.log(filename);
-            // const filename = contentDisposition;
             setFileNameDownload(filename);
-            console.log(filename);
 
             const blob = new Blob([response.data], {
                 type: response.headers['content-type'],
             });
+            setBlobFile(blob);
             setURL(window.URL.createObjectURL(blob));
-            console.log(response);
+            // console.log(response);
         } catch (error) {
             alert(error);
             console.error('Error sending data: ', error);
@@ -164,7 +168,13 @@ const PRSice2Tool = () => {
                     <div>
                         <Output url={url} filename={fileNameDownload} />
                         <div style={{ padding: '1%' }}></div>
-                        {/* <StorageButton /> */}
+                        <SaveResultButton
+                            data={
+                                typeof blobFile === 'undefined' ? '' : blobFile
+                            }
+                            filename={fileNameDownload}
+                            endpoint="storePRSice2"
+                        />
                     </div>
                 ) : (
                     <></>

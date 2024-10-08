@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { ChangeEvent } from 'react';
-import { pushFile } from '../../redux/fileStoreSlice';
+import { pushFile, resetFiles } from '../../redux/fileStoreSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 // import { updateValue } from '../../redux/stringParamSlice';
@@ -30,6 +30,7 @@ export default function UploadButton() {
     const fileKeys = useSelector((state: RootState) => state.fileKeysStore);
     // console.log(fileKeys);
     const handleChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(resetFiles());
         const selectedFiles = e.target.files;
         if (selectedFiles) {
             const files = Array.from(selectedFiles);

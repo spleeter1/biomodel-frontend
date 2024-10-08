@@ -2,12 +2,13 @@ import { Box, Typography } from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
 import axios from 'axios';
 
-type StorageButtonProps = {
+type SaveResultButtonProps = {
     data: Blob | string;
+    // key: string;
     filename: string;
     endpoint: string;
 };
-const StorageButton: React.FC<StorageButtonProps> = ({
+const SaveResultButton: React.FC<SaveResultButtonProps> = ({
     data,
     filename,
     endpoint,
@@ -16,9 +17,9 @@ const StorageButton: React.FC<StorageButtonProps> = ({
         const formData = new FormData();
         formData.append('user', 'biomodel');
 
-        const newPic = new File([data], filename);
+        const newData = new File([data], filename);
         // console.log(filename);
-        formData.append('image', newPic);
+        formData.append('fileResult', newData);
         try {
             const response = await axios.post(
                 `http://127.0.0.1:5000/${endpoint}/`,
@@ -72,4 +73,4 @@ const StorageButton: React.FC<StorageButtonProps> = ({
         </Box>
     );
 };
-export default StorageButton;
+export default SaveResultButton;
