@@ -3,7 +3,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import axios from 'axios';
 
 type SaveVGPdiseasesBtnProps = {
-    data: Blob[]
+    data: Blob[];
     endpoint: string;
 };
 const SaveVGPdiseasesBtn: React.FC<SaveVGPdiseasesBtnProps> = ({
@@ -14,11 +14,10 @@ const SaveVGPdiseasesBtn: React.FC<SaveVGPdiseasesBtnProps> = ({
         const formData = new FormData();
         formData.append('user', 'biomodel');
 
-        data.map((file) => {
+        data.map(file => {
             formData.append('image', file);
-        })
-        
-        
+        });
+
         try {
             const response = await axios.post(
                 `http://127.0.0.1:5000/${endpoint}/`,
